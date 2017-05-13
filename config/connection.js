@@ -1,18 +1,20 @@
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : '< MySQL username >',
-  password : 'nosskyline',
-  database : 'burger_db'
-});
+
+var mysql = require("mysql");
+
+var connection;
+
+if(process.env.JAWSDB_URL){
+    connection = mysql.createConnection(process.env.JAWSDB_URL);
+}
+else{
+    connection = mysql.createConnection({
+        host:'localhost',
+        user:"root",
+        password:'nosskyline',
+        database:"burgers_db"
+    });
+}
 
 connection.connect();
 
-connection.query('SELECT * from < table name >', function(err, rows, fields) {
-  if (!err)
-    console.log('The solution is: ', rows);
-  else
-    console.log('Error while performing Query.');
-});
-
-connection.end();
+module.exports = connection;
